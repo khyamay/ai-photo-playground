@@ -21,7 +21,13 @@
     "workspace-generator": "nx workspace-generator",
     "affected:graph": "nx affected:dep-graph",
     "run-many": "nx run-many",
-    "graph": "nx graph"
+    "graph": "nx graph",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
+    "docker:down": "docker-compose down",
+    "docker:start": "docker-compose up -d",
+    "docker:stop": "docker-compose stop",
+    "docker:logs": "docker-compose logs -f"
   },
   "private": true,
   "dependencies": {

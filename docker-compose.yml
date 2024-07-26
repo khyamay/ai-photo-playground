@@ -1,0 +1,15 @@
+version: '3'
+services:
+  restore-photo:
+    build:
+      context: .
+      args:
+        APP: restore-photo
+    ports:
+      - '4200:4200'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm start restore-photo
