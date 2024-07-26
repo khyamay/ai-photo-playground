@@ -24,3 +24,16 @@ services:
     environment:
       - NODE_ENV=development
     command: npm start api
+  database:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: restore_photo_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -27,7 +27,9 @@
     "docker:down": "docker-compose down",
     "docker:start": "docker-compose up -d",
     "docker:stop": "docker-compose stop",
-    "docker:logs": "docker-compose logs -f"
+    "docker:logs": "docker-compose logs -f",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +42,7 @@
     "@angular/platform-browser-dynamic": "~18.1.0",
     "@angular/router": "~18.1.0",
     "@nx/angular": "19.5.3",
+    "@prisma/client": "^5.17.0",
     "axios": "^1.6.0",
     "express": "^4.18.1",
     "rxjs": "~7.8.0",
@@ -87,6 +90,7 @@
     "jest-preset-angular": "~14.1.0",
     "nx": "19.5.3",
     "prettier": "^2.6.2",
+    "prisma": "^5.17.0",
     "react-refresh": "^0.10.0",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
