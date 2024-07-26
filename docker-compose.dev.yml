@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '4200:4200'
+    environment:
+      - NODE_ENV=development
+    command:
+      ['npx', 'nx', 'serve', 'restore-photo', '--configuration=development']
+    depends_on:
+      - backend
+      - db
+
+  backend:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '3333:3333'
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://user:password@db:5432/restore_photo_db
+    command: ['npx', 'nx', 'serve', 'api', '--configuration=development']
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: restore_photo_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
