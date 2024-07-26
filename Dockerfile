@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 4200
+EXPOSE 4200 3333
 
 # Command to run the application
 CMD ["npm", "start", "restore-photo"]

@@ -13,3 +13,14 @@ services:
     environment:
       - NODE_ENV=development
     command: npm start restore-photo
+  api:
+    build:
+      context: .
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm start api
