@@ -15,7 +15,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ai-photo-playground/database": ["database/src/index.ts"]
+      "@ai-photo-playground/database": ["database/src/index.ts"],
+      "@ai-photo-playground/restore-photo/shell": [
+        "libs/restore-photo/shell/src/index.ts"
+      ],
+      "@ai-photo-playground/restore-photo/upload-file": [
+        "libs/restore-photo/upload-file/src/index.ts"
+      ],
+      "@ai-photo-playground/shared-ui": ["libs/shared-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
