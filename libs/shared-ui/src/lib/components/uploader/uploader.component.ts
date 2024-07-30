@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, ElementRef, ViewChild, signal } from '@angular/core';
 
 @Component({
   selector: 'shared-ui-uploader',
@@ -7,9 +7,11 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
   imports: [CommonModule],
   templateUrl: './uploader.component.html',
   styleUrl: './uploader.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploaderComponent {
+  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
+
   selectedFile = signal<File | null>(null);
   previewUrl = signal<string | null>(null);
 
@@ -18,6 +20,7 @@ export class UploaderComponent {
     if (input.files && input.files.length > 0) {
       this.selectedFile.set(input.files[0]);
       this.previewFile(input.files[0]);
+      this.scrollToBottom();
     }
   }
 
@@ -30,6 +33,7 @@ export class UploaderComponent {
     if (event.dataTransfer?.files.length) {
       this.selectedFile.set(event.dataTransfer.files[0]);
       this.previewFile(event.dataTransfer.files[0]);
+      this.scrollToBottom();
     }
   }
 
@@ -41,10 +45,29 @@ export class UploaderComponent {
     reader.readAsDataURL(file);
   }
 
+  clearImage(event: Event): void {
+    event.stopPropagation();
+    this.selectedFile.set(null);
+    this.previewUrl.set(null);
+  }
+
   onSubmit(): void {
     if (this.selectedFile()) {
       console.log('File uploaded:', this.selectedFile());
       // Here you would typically call a service to handle the file upload
     }
+  }
+
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      try {
+        this.scrollContainer.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+        });
+      } catch (err) {
+        console.error('Error scrolling to bottom:', err);
+      }
+    }, 250);
   }
 }
