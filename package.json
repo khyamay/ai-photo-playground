@@ -60,6 +60,8 @@
     "@angular/cli": "~18.1.0",
     "@angular/compiler-cli": "~18.1.0",
     "@angular/language-service": "~18.1.0",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@nx/angular": "^19.5.3",
     "@nx/cypress": "19.5.3",
     "@nx/eslint": "19.5.3",
@@ -93,6 +95,7 @@
     "jest-environment-node": "^29.4.1",
     "jest-preset-angular": "~14.1.0",
     "lint-staged": "^15.2.7",
+    "nodemon": "^3.1.4",
     "nx": "19.5.3",
     "postcss": "^8.4.40",
     "prettier": "^2.6.2",
@@ -105,8 +108,11 @@
     "webpack-cli": "^5.1.4"
   },
   "lint-staged": {
-    "*.{ts,html}": [
-      "nx affected:lint --fix --files"
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,md,yml}": [
+      "prettier --write"
     ]
   }
 }
