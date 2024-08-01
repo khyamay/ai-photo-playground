@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { environment } from '@ai-photo-playground/shared/environments';
+
 @Injectable({
   providedIn: 'root',
 })
 export class RestorePhotoService {
-  private apiUrl = 'http://localhost:3333/api/photo/upload'; // temp replace this with env
+  protected base = 'photo/upload';
 
   constructor(private http: HttpClient) {}
 
@@ -14,6 +16,8 @@ export class RestorePhotoService {
     const formData = new FormData();
     formData.append('photo', file);
 
-    return this.http.post(this.apiUrl, formData, { responseType: 'blob' });
+    return this.http.post(`${environment.apiUrl}/${this.base}`, formData, {
+      responseType: 'blob',
+    });
   }
 }
