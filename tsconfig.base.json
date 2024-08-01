@@ -22,7 +22,10 @@
       "@ai-photo-playground/restore-photo/upload-file": [
         "libs/restore-photo/upload-file/src/index.ts"
       ],
-      "@ai-photo-playground/shared-ui": ["libs/shared-ui/src/index.ts"]
+      "@ai-photo-playground/shared-ui": ["libs/shared-ui/src/index.ts"],
+      "@ai-photo-playground/shared/data-access": [
+        "libs/shared/data-access/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
