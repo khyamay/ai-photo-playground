@@ -1,6 +1,5 @@
 version: '3.8'
 
-
 # Define reusable volumes configuration
 x-common-volumes: &common-volumes
   volumes:
@@ -9,7 +8,6 @@ x-common-volumes: &common-volumes
 
 volumes:
   postgres_data:
-
 
 services:
   frontend:
@@ -37,7 +35,7 @@ services:
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgresql://user:password@db:5432/restore_photo_db
-    command: ['npx', 'nx', 'serve', 'api', '--configuration=development']
+    command: nodemon --exec "nx serve api" --watch ./apps/api
     depends_on:
       - db
 
@@ -49,6 +47,3 @@ services:
       POSTGRES_DB: restore_photo_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:

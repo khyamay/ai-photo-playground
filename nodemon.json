@@ -1,0 +1,6 @@
+{
+  "watch": ["apps/api"],
+  "ext": "ts,json",
+  "ignore": ["apps/api/**/*.spec.ts"],
+  "exec": "nx serve api"
+}
