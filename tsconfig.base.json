@@ -25,6 +25,9 @@
       "@ai-photo-playground/shared-ui": ["libs/shared-ui/src/index.ts"],
       "@ai-photo-playground/shared/data-access": [
         "libs/shared/data-access/src/index.ts"
+      ],
+      "@ai-photo-playground/shared/environments": [
+        "libs/shared/environments/src/index.ts"
       ]
     }
   },
