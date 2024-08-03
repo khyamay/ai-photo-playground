@@ -95,6 +95,7 @@ export class UploaderComponent {
           catchError((error: HttpErrorResponse) => {
             this.errorMessage.set('Failed to upload image. Please try again.');
             this.isLoading.set(false);
+            this.scrollToBottom();
             return EMPTY;
           })
         )
