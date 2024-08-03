@@ -9,4 +9,6 @@ RUN npm install -g nx nodemon
 FROM base as development
 COPY . .
 
+RUN npx prisma generate
+
 CMD ["nx", "serve", "api"]

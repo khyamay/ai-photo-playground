@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ai-photo-playground/database": ["database/src/index.ts"],
+      "@ai-photo-playground/database": ["libs/database/src/index.ts"],
       "@ai-photo-playground/restore-photo/shell": [
         "libs/restore-photo/shell/src/index.ts"
       ],
