@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RestorePhotoService } from './restore-photo.service';
+import { CloudinaryService } from './cloudinary.service';
 
-describe('RestorePhotoService', () => {
-  let service: RestorePhotoService;
+describe('CloudinaryService', () => {
+  let service: CloudinaryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RestorePhotoService);
+    service = TestBed.inject(CloudinaryService);
   });
 
   it('should be created', () => {

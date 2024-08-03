@@ -1,1 +1,1 @@
-export * from './lib/services/restore-photo/restore-photo.service';
+export * from './lib/services/cloudinary/cloudinary.service';

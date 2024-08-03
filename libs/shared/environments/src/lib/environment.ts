@@ -1,8 +1,9 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'http://localhost:3333/api',
   cloudinary: {
-    cloudName: 'your_cloud_name',
-    apiKey: 'your_api_key',
+    cloudName: 'dnlxjuak7',
+    apiKey: '618484162733371',
+    folder: 'restore-photo',
   },
 };

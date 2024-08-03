@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild, signal } from '@angular/core';
 
-import { RestorePhotoService } from '@ai-photo-playground/shared/data-access';
+import { CloudinaryService } from '@ai-photo-playground/shared/data-access';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EMPTY, catchError } from 'rxjs';
 import { ImageComponent } from '../image/image.component';
 
 @Component({
@@ -9,7 +11,7 @@ import { ImageComponent } from '../image/image.component';
   imports: [ImageComponent],
   templateUrl: './uploader.component.html',
   styleUrl: './uploader.component.scss',
-  providers: [RestorePhotoService],
+  providers: [CloudinaryService],
 })
 export class UploaderComponent {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
@@ -19,10 +21,14 @@ export class UploaderComponent {
   selectedFile = signal<File | null>(null);
   previewUrl = signal<string | null>(null);
   restoredPhotoUrl = signal<string | null>(null);
+  originalImageUrl = signal<string | null>(null);
+
   isLoading = signal<boolean>(false);
   sliderPosition = signal<number>(50);
+  errorMessage = signal<string | null>(null);
 
-  constructor(private restorePhotoService: RestorePhotoService) {}
+  constructor(private cloudinaryService: CloudinaryService) {}
+
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     const file = fileInput.files?.[0] || null;
@@ -82,24 +88,21 @@ export class UploaderComponent {
     const selectedFile = this.selectedFile();
     if (selectedFile) {
       this.isLoading.set(true);
-      this.restorePhotoService.restorePhoto(selectedFile).subscribe({
-        next: (restoredPhoto: Blob) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            setTimeout(() => {
-              this.restoredPhotoUrl.set(reader.result as string);
-              this.scrollToBottom();
-              this.isLoading.set(false);
-              setTimeout(() => this.initSlider(), 0);
-            }, 5000);
-          };
-          reader.readAsDataURL(restoredPhoto);
-        },
-        error: (error) => {
-          console.error('Error restoring photo:', error);
-          // Handle error, e.g., show error message to user
-        },
-      });
+      this.errorMessage.set(null);
+      this.cloudinaryService
+        .uploadImage(selectedFile)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.errorMessage.set('Failed to upload image. Please try again.');
+            this.isLoading.set(false);
+            return EMPTY;
+          })
+        )
+        .subscribe((originalUrl: string) => {
+          console.log(originalUrl);
+          // this.originalImageUrl.set(originalUrl);
+          this.isLoading.set(false);
+        });
     }
   }
 
