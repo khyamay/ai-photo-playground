@@ -1,9 +1,11 @@
 import express from 'express';
 
-import { photoRouter } from './photo.routes';
+import { cloudinaryRouter } from './cloudinary.route';
+import { imageRouter } from './image.route';
 
 const router = express.Router();
 
-router.use('/photo', photoRouter);
+router.use('/cloudinary', cloudinaryRouter);
+router.use('/image', imageRouter);
 
 export const routes = router;

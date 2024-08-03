@@ -1,1 +1,1 @@
-export * from './photo.middleware';
+export * from './image.middleware';
