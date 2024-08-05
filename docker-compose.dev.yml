@@ -6,9 +6,6 @@ x-common-volumes: &common-volumes
     - .:/app
     - /app/node_modules
 
-volumes:
-  postgres_data:
-
 services:
   frontend:
     build:
@@ -34,7 +31,9 @@ services:
       - '3333:3333'
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=postgresql://user:password@db:5432/restore_photo_db
+      - DATABASE_URL=${DATABASE_URL}
+    env_file:
+      - .env
     command: nodemon --exec "nx serve api" --watch ./apps/api
     depends_on:
       - db
@@ -45,5 +44,20 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: restore_photo_db
+    ports:
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - '5050:80'
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
