@@ -1,8 +1,13 @@
+import { saveAs } from 'file-saver';
+
 import { Component, ElementRef, ViewChild, signal } from '@angular/core';
 
-import { CloudinaryService } from '@ai-photo-playground/shared/data-access';
+import {
+  CloudinaryService,
+  ReplicateService,
+} from '@ai-photo-playground/shared/data-access';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EMPTY, catchError } from 'rxjs';
+import { EMPTY, catchError, switchMap } from 'rxjs';
 import { ImageComponent } from '../image/image.component';
 
 @Component({
@@ -20,14 +25,17 @@ export class UploaderComponent {
 
   selectedFile = signal<File | null>(null);
   previewUrl = signal<string | null>(null);
-  restoredPhotoUrl = signal<string | null>(null);
+  restoredImageUrl = signal<string | null>(null);
   originalImageUrl = signal<string | null>(null);
 
   isLoading = signal<boolean>(false);
   sliderPosition = signal<number>(50);
   errorMessage = signal<string | null>(null);
 
-  constructor(private cloudinaryService: CloudinaryService) {}
+  constructor(
+    private cloudinaryService: CloudinaryService,
+    private replicateService: ReplicateService
+  ) {}
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
@@ -76,7 +84,7 @@ export class UploaderComponent {
     event.stopPropagation();
     this.selectedFile.set(null);
     this.previewUrl.set(null);
-    this.restoredPhotoUrl.set(null);
+    this.restoredImageUrl.set(null);
     this.isLoading.set(false);
     this.sliderPosition.set(50);
     if (this.fileInput) {
@@ -92,16 +100,25 @@ export class UploaderComponent {
       this.cloudinaryService
         .uploadImage(selectedFile)
         .pipe(
+          switchMap((originalUrl: string) => {
+            this.originalImageUrl.set(originalUrl);
+            return this.replicateService.restoreImage(originalUrl);
+          }),
           catchError((error: HttpErrorResponse) => {
-            this.errorMessage.set('Failed to upload image. Please try again.');
+            this.errorMessage.set(error.message);
             this.isLoading.set(false);
             this.scrollToBottom();
             return EMPTY;
           })
         )
-        .subscribe((originalUrl: string) => {
-          console.log(originalUrl);
-          // this.originalImageUrl.set(originalUrl);
+        .subscribe((restoredUrl: string) => {
+          console.log(restoredUrl);
+          if (restoredUrl) {
+            this.restoredImageUrl.set(restoredUrl);
+            setTimeout(() => {
+              this.initSlider();
+            }, 100);
+          }
           this.isLoading.set(false);
         });
     }

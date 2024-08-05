@@ -1,11 +1,12 @@
 import express from 'express';
 
 import { cloudinaryRouter } from './cloudinary.route';
-import { imageRouter } from './image.route';
+
+import { replicateRouter } from './replicate.route';
 
 const router = express.Router();
 
 router.use('/cloudinary', cloudinaryRouter);
-router.use('/image', imageRouter);
+router.use('/replicate', replicateRouter);
 
 export const routes = router;

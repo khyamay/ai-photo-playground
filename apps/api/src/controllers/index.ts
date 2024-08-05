@@ -1,1 +1,1 @@
-export * from './image.controller';
+export * from './replicate.controller';

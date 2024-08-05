@@ -49,12 +49,12 @@
     <div class="relative text-center">
       @if (previewUrl()) {
       <div class="relative inline-block">
-        @if (!restoredPhotoUrl()) {
+        @if (!restoredImageUrl()) {
         <shared-ui-image
           [imageUrl]="previewUrl()"
           class="max-w-full max-h-[600px] object-contain duration-500 ease-in-out"
         ></shared-ui-image>
-        } @if (restoredPhotoUrl()) {
+        } @if (restoredImageUrl()) {
         <div class="relative overflow-hidden" #slider>
           <!-- Original Image -->
           <shared-ui-image
@@ -68,7 +68,7 @@
             [style.clip-path]="'inset(0 ' + (100 - sliderPosition()) + '% 0 0)'"
           >
             <shared-ui-image
-              [imageUrl]="restoredPhotoUrl()"
+              [imageUrl]="restoredImageUrl()"
               class="max-w-full max-h-[600px] object-contain"
             ></shared-ui-image>
           </div>
@@ -114,7 +114,7 @@
 
     <!-- Restore Button -->
     <div class="mt-4 flex justify-center space-x-4">
-      @if (!restoredPhotoUrl()) {
+      @if (!restoredImageUrl()) {
 
       <button
         (click)="onSubmit()"
@@ -123,7 +123,7 @@
       >
         Restore Photo
       </button>
-      } @if (restoredPhotoUrl()) {
+      } @if (restoredImageUrl()) {
       <a
         [href]="restoredPhotoUrl()"
         download

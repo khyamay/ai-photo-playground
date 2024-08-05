@@ -5,9 +5,9 @@ export const validateImage = (
   res: Response,
   next: NextFunction
 ) => {
-  const { originalUrl } = req.body;
-  if (!originalUrl) {
-    return res.status(400).json({ error: 'Original image URL is required' });
+  const { imageUrl } = req.body;
+  if (!imageUrl || typeof imageUrl !== 'string') {
+    return res.status(400).json({ error: 'Valid image URL is required' });
   }
   next();
 };
