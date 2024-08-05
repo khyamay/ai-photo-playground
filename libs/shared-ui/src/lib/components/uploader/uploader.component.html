@@ -125,8 +125,7 @@
       </button>
       } @if (restoredImageUrl()) {
       <a
-        [href]="restoredPhotoUrl()"
-        download
+        (click)="downloadRestoredImage()"
         class="px-4 py-2 bg-secondary-main text-white font-semibold rounded-md shadow-md hover:bg-secondary-dark focus:outline-none focus:ring-2 focus:ring-secondary-light focus:ring-opacity-75 transition-all duration-300"
       >
         Download Restored Photo

@@ -118,7 +118,6 @@ export const restoreImage = async (imageUrl: string) => {
   try {
     const initialResponse = await startPrediction(imageUrl);
     const restoredUrl = await pollForResult(initialResponse.urls.get);
-    const storedImage = await storeImageInDB(imageUrl, restoredUrl);
     return restoredUrl;
   } catch (error) {
     console.error(`Error restoring image: ${error.message}`);

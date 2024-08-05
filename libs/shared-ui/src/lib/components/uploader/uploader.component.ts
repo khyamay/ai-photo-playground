@@ -92,6 +92,13 @@ export class UploaderComponent {
     }
   }
 
+  downloadRestoredImage() {
+    saveAs(
+      this.restoredImageUrl() as string,
+      `restored image - ${new Date()}.jpg`
+    );
+  }
+
   onSubmit(): void {
     const selectedFile = this.selectedFile();
     if (selectedFile) {
