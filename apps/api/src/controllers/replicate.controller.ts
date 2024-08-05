@@ -6,7 +6,6 @@ export const handleRestoreImage = async (req: Request, res: Response) => {
 
   try {
     const result = await ReplicateService.restoreImage(imageUrl);
-    console.log('image url', imageUrl);
     res.status(200).json(result);
   } catch (error) {
     console.error('Error restoring image:', error);
